@@ -5,8 +5,10 @@ import pandas as pd
 
 from utils import interpolated_prec_rec
 from utils import segment_iou
+from utils import get_blocked_videos
 
 from joblib import Parallel, delayed
+
 
 class ActionDetectorDiagnosis(object):
 
@@ -30,7 +32,8 @@ class ActionDetectorDiagnosis(object):
                                                'num-instances': (np.array([-1,1,4,8,np.inf]), ['XS','S','M','L'])},
                  normalize_ap=False,
                  minimum_normalized_precision_threshold_for_detection=0.00,
-                 evaluate_with_multi_segments=None):
+                 evaluate_with_multi_segments=None,
+                 check_status=True):
         if not ground_truth_filename:
             raise IOError('Please input a valid ground truth file.')
         if not prediction_filename:
@@ -41,6 +44,12 @@ class ActionDetectorDiagnosis(object):
         self.gt_fields = ground_truth_fields
         self.pred_fields = prediction_fields
         self.ap = None
+        self.check_status = check_status
+        # Retrieve blocked videos from server.
+        if self.check_status:
+            self.blocked_videos = get_blocked_videos()
+        else:
+            self.blocked_videos = list()
         self.load_extra_annotations = load_extra_annotations
         self.characteristic_names_to_bins = characteristic_names_to_bins
         self.characteristic_names = characteristic_names_to_bins.keys()
@@ -108,6 +117,8 @@ class ActionDetectorDiagnosis(object):
 
         for videoid, v in data['database'].items():
             if self.subset != v['subset']:
+                continue
+            if videoid in self.blocked_videos:
                 continue
             for ann in v['annotations']:
                 if ann['label'] not in activity_index:
@@ -183,6 +194,8 @@ class ActionDetectorDiagnosis(object):
         video_lst, t_start_lst, t_end_lst = [], [], []
         label_lst, score_lst = [], []
         for videoid, v in data['results'].items():
+            if videoid in self.blocked_videos:
+                continue
             for result in v:
                 label = self.activity_index[result['label']]
                 video_lst.append(videoid)
