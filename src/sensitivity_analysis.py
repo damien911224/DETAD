@@ -236,7 +236,7 @@ def main(ground_truth_filename, subset, prediction_filename, output_folder, is_t
                                                 verbose=True, 
                                                 load_extra_annotations=True,
                                                 characteristic_names_to_bins=characteristic_names_to_bins,
-                                                normalize_ap=True,
+                                                normalize_ap=False,
                                                 minimum_normalized_precision_threshold_for_detection=0.0
                                             )
 
