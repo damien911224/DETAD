@@ -380,7 +380,7 @@ class ActionDetectorDiagnosis(object):
 
 
 def compute_average_precision_detection(ground_truth, prediction, tiou_thresholds=np.linspace(0.5, 0.95, 10),
-                                        normalize_ap=False, average_num_instance_per_class=None,
+                                        normalize_ap=True, average_num_instance_per_class=None,
                                         minimum_normalized_precision_threshold_for_detection=0.05):
     """Compute average precision (detection task) between ground truth and
     predictions data frames. If multiple predictions occurs for the same
