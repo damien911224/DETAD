@@ -198,8 +198,7 @@ class ActionDetectorDiagnosis(object):
                 continue
             for result in v:
                 # label = self.activity_index[result['label']]
-                print(self.activity_index.keys())
-                exit()
+                label = self.activity_index[sorted(self.activity_index.keys())result['label']]
                 label = int(result['label'])
                 video_lst.append(videoid)
                 t_start_lst.append(float(result['segment'][0]))
