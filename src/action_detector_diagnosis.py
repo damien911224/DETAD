@@ -197,7 +197,8 @@ class ActionDetectorDiagnosis(object):
             if videoid in self.blocked_videos:
                 continue
             for result in v:
-                label = self.activity_index[result['label']]
+                # label = self.activity_index[result['label']]
+                label = int(result['label'])
                 video_lst.append(videoid)
                 t_start_lst.append(float(result['segment'][0]))
                 t_end_lst.append(float(result['segment'][1]))
