@@ -33,7 +33,7 @@ class ActionDetectorDiagnosis(object):
                  normalize_ap=False,
                  minimum_normalized_precision_threshold_for_detection=0.00,
                  evaluate_with_multi_segments=None,
-                 check_status=True):
+                 check_status=False):
         if not ground_truth_filename:
             raise IOError('Please input a valid ground truth file.')
         if not prediction_filename:
