@@ -364,8 +364,8 @@ class ActionDetectorDiagnosis(object):
                         fp = np.abs(tp - 1)
 
                         # Computing prec-rec
-                        this_tp = np.cumsum(tp).astype(np.float)
-                        this_fp = np.cumsum(fp).astype(np.float)
+                        this_tp = np.cumsum(tp).astype(np.float64)
+                        this_fp = np.cumsum(fp).astype(np.float64)
                         rec = this_tp / npos
                         if self.normalize_ap:
                             prec = rec * self.average_num_instance_per_class / (rec * self.average_num_instance_per_class + this_fp)
@@ -471,8 +471,8 @@ def compute_average_precision_detection(ground_truth, prediction, tiou_threshold
         fp[discard_index] = 1
         matched_gt_id[discard_index] = np.nan
 
-        tp_cumsum = np.cumsum(tp, axis=1).astype(np.float)
-        fp_cumsum = np.cumsum(fp, axis=1).astype(np.float)
+        tp_cumsum = np.cumsum(tp, axis=1).astype(np.float64)
+        fp_cumsum = np.cumsum(fp, axis=1).astype(np.float64)
         recall_cumsum = tp_cumsum / npos
 
         precision_cumsum = recall_cumsum * average_num_instance_per_class / (recall_cumsum * average_num_instance_per_class + fp_cumsum)
