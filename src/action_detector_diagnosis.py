@@ -359,7 +359,7 @@ class ActionDetectorDiagnosis(object):
 
                     for tidx in range(len(self.tiou_thresholds)):
                         this_error_types = this_pred_df[self.fp_error_type_cols[tidx]].T.values
-                        tp = (~np.isnan(this_pred_df[self.matched_gt_id_cols[tidx]].T)).astype(np.int)
+                        tp = (~np.isnan(this_pred_df[self.matched_gt_id_cols[tidx]].T)).astype(np.int32)
                         tp = tp[this_error_types!=err_code]
                         fp = np.abs(tp - 1)
 
